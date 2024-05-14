@@ -1,0 +1,174 @@
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+
+#Tampilan
+app = QApplication([])
+window = QMainWindow()
+window.setWindowTitle("Dasboard Keuangan")
+window.setGeometry(500,250,400,500)
+window.setFixedSize(400,500)
+
+#Tombol
+btn_enter = QPushButton("MASUK", window)
+btn_enter.setMinimumSize(QSize( 200,50))
+btn_enter.setStyleSheet("background-color:#FAEBD0")
+btn_enter.move(90, 250)
+
+#Perulangan
+def masuk():
+        import halaman_2
+        window.hide()
+        halaman_2.window.show()
+
+#Tampilan
+btn_enter.clicked.connect(masuk)
+window.show()
+app.exec()
+
+
+from PyQt5.QtWidgets import *
+import csv
+
+app = QApplication([])
+window = QMainWindow()
+window.setWindowTitle("Dashboard Keuangan")
+window.setGeometry(500, 250, 400, 500)
+window.setFixedSize(400, 500)
+
+InputAngka = QLabel("Masukkan Nominal Token:", window)
+InputAngka.adjustSize()
+InputAngka.move(100, 222)
+InputAngka.setStyleSheet("background-color:#FAEBD0")
+
+NominalHarga = QComboBox(window)
+NominalHarga.addItems(['50.000', '100.000', '250.000', '500.000'])
+NominalHarga.setFixedSize(200, 50)
+NominalHarga.move(100, 250)
+
+NomorID = QLabel("Masukkan ID Pelanggan:", window)
+NomorID.adjustSize()
+NomorID.move(100, 105)
+NomorID.setStyleSheet("background-color:#FAEBD0")
+
+InputID = QLineEdit(window)
+InputID.setPlaceholderText("ID Pelanggan")
+InputID.setToolTip("ID Pelanggan")
+InputID.setFixedSize(200, 50)
+InputID.move(100, 130)
+
+tombol1 = QPushButton("BAYAR", window)
+tombol1.setStyleSheet("background-color:#FAEBD0")
+tombol1.adjustSize()
+tombol1.move(100, 400)
+tombol1.setFixedSize(200, 50)
+
+def nomor_token():
+    id_pelanggan = InputID.text()
+    if len(id_pelanggan) != 12 or not id_pelanggan.isdigit():
+        msg_box = QMessageBox(window)
+        msg_box.setText("Isi ID Pelanggan dengan benar (12 digit numerik)")
+        msg_box.setWindowTitle("Error")
+        msg_box.setIcon(QMessageBox.Information)
+        msg_box.setStandardButtons(QMessageBox.Ok)
+        msg_box.exec_()
+        InputID.clear()
+    else:
+        selanjutnya()
+
+def selanjutnya():
+    import halaman_3
+    window.hide()
+    halaman_3.window.show()
+
+tombol1.clicked.connect(nomor_token)
+window.show()
+app.exec()
+
+
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
+import random
+
+app = QApplication([])
+window = QMainWindow()
+window.setWindowTitle("Dashboard Keuangan")
+window.setGeometry(500, 250, 400, 500)
+window.setFixedSize(400, 500)
+
+NomorRK = QLabel("Masukkan Nomor Rekening:", window)
+NomorRK.adjustSize()
+NomorRK.move(100, 265)
+NomorRK.setStyleSheet("background-color:#FAEBD0")
+
+InputRK = QLineEdit(window)
+InputRK.setPlaceholderText("NOMOR REKENING...")
+InputRK.setToolTip("NOMOR REKENING...")
+InputRK.setFixedSize(300, 60)
+InputRK.move(60, 300)
+
+PilihBnk = QLabel("Pilih Bank:", window)
+PilihBnk.adjustSize()
+PilihBnk.move(160, 110)
+PilihBnk.setStyleSheet("background-color:#FAEBD0")
+
+NmrRek = QComboBox(window)
+NmrRek.addItems(['BANK BRI', 'BANK BNI', 'BANK BCA', 'BANK MANDIRI'])
+NmrRek.move(60, 150)
+NmrRek.setFixedSize(300, 60)
+
+tombol_bayar = QPushButton("SUDAH BAYAR", window)
+tombol_bayar.setStyleSheet("background-color:#FAEBD0")
+tombol_bayar.adjustSize()
+tombol_bayar.move(150, 400)
+
+tombol_kembali = QPushButton("Kembali", window)
+tombol_kembali.adjustSize()
+tombol_kembali.setStyleSheet("background-color:#FAEBD0")
+tombol_kembali.move(150, 450)
+
+#kesalahan
+def nomor_token():
+    angka_token = InputRK.text()
+    if not angka_token.isdigit():
+        msg_box = QMessageBox(window)
+        msg_box.setText("Nomor Rekening harus angka")
+        msg_box.setWindowTitle("Error")
+        msg_box.setIcon(QMessageBox.Information)
+        msg_box.setStandardButtons(QMessageBox.Ok)
+        msg_box.exec_()
+        InputRK.clear()
+    elif len(angka_token) != 15:
+        msg_box = QMessageBox(window)
+        msg_box.setText("Nomor Rekening harus 15 digit")
+        msg_box.setWindowTitle("Error")
+        msg_box.setIcon(QMessageBox.Information)
+        msg_box.setStandardButtons(QMessageBox.Ok)
+        msg_box.exec_()
+        InputRK.clear()
+    else:
+        nomor_token1 = random.randint(10000, 99999)
+        nomor_token2 = random.randint(10000, 99999)
+        nomor_token3 = random.randint(10000, 99999)
+        nomor_token4 = random.randint(10000, 99999)
+        msg_box = QMessageBox(window)
+        nomor_token_text = f"Nomor Token Anda {nomor_token1}-{nomor_token2}-{nomor_token3}-{nomor_token4}"
+        msg_box.setText(nomor_token_text)
+        msg_box.setWindowTitle("PEMBAYARAN BERHASIL")
+        msg_box.setIcon(QMessageBox.Information)
+        msg_box.setStandardButtons(QMessageBox.Ok)
+        msg_box.exec_()
+        InputRK.clear()
+
+#Kembali
+def sebelum():
+    import halaman_2
+    window.hide()
+    halaman_2.window.show()
+
+#Connect
+tombol_kembali.clicked.connect(sebelum)
+tombol_bayar.clicked.connect(nomor_token)
+window.show()
+app.exec()
+
